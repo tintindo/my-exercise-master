@@ -2,11 +2,12 @@
 using System.Reflection;
 using Abp.EntityFramework;
 using Abp.Modules;
+using Abp.Zero.EntityFramework;
 using EOffice.EntityFramework;
 
 namespace EOffice
 {
-    [DependsOn(typeof(AbpEntityFrameworkModule), typeof(EOfficeCoreModule))]
+    [DependsOn(typeof(AbpZeroEntityFrameworkModule), typeof(EOfficeCoreModule))]
     public class EOfficeDataModule : AbpModule
     {
         public override void PreInitialize()

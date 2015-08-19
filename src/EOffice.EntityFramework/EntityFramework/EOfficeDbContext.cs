@@ -1,13 +1,21 @@
-﻿using Abp.EntityFramework;
+﻿using System.Data.Common;
+using System.Data.Entity;
+using Abp.Zero.EntityFramework;
+using EOffice.Authorization;
+using EOffice.MultiTenancy;
+using EOffice.Questions;
+using EOffice.Users;
 
 namespace EOffice.EntityFramework
 {
-    public class EOfficeDbContext : AbpDbContext
+    public class EOfficeDbContext : AbpZeroDbContext<Tenant, Role, User>
     {
         //TODO: Define an IDbSet for each Entity...
 
         //Example:
         //public virtual IDbSet<User> Users { get; set; }
+        public virtual IDbSet<Question> Questions { get; set; }
+        public virtual IDbSet<Answer> Answers { get; set; }
 
         /* NOTE: 
          *   Setting "Default" to base class helps us when working migration commands on Package Manager Console.
@@ -26,6 +34,12 @@ namespace EOffice.EntityFramework
          */
         public EOfficeDbContext(string nameOrConnectionString)
             : base(nameOrConnectionString)
+        {
+
+        }
+
+        public EOfficeDbContext(DbConnection connection)
+            : base(connection, true)
         {
 
         }

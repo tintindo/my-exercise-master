@@ -28,6 +28,20 @@ namespace EOffice.Web
                         url: "#/about",
                         icon: "fa fa-info"
                         )
+                ).AddItem(
+                    new MenuItemDefinition(
+                        "Questions",
+                        new LocalizableString("Questions", EOfficeConsts.LocalizationSourceName),
+                        url: "#/questions",
+                        icon: "fa fa-question"
+                        )
+                ).AddItem(
+                    new MenuItemDefinition(
+                        "Users",
+                        new LocalizableString("Users", EOfficeConsts.LocalizationSourceName),
+                        url: "#/users",
+                        icon: "fa fa-users"
+                        )
                 );
         }
     }
