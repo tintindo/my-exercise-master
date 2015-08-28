@@ -23,13 +23,6 @@ namespace EOffice.Web
                         )
                 ).AddItem(
                     new MenuItemDefinition(
-                        "About",
-                        new LocalizableString("About", EOfficeConsts.LocalizationSourceName),
-                        url: "#/about",
-                        icon: "fa fa-info"
-                        )
-                ).AddItem(
-                    new MenuItemDefinition(
                         "Questions",
                         new LocalizableString("Questions", EOfficeConsts.LocalizationSourceName),
                         url: "#/questions",
@@ -41,6 +34,13 @@ namespace EOffice.Web
                         new LocalizableString("Users", EOfficeConsts.LocalizationSourceName),
                         url: "#/users",
                         icon: "fa fa-users"
+                        )
+                ).AddItem(
+                    new MenuItemDefinition(
+                        "About",
+                        new LocalizableString("About", EOfficeConsts.LocalizationSourceName),
+                        url: "#/about",
+                        icon: "fa fa-info"
                         )
                 );
         }
