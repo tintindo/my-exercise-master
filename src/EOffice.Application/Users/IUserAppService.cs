@@ -7,5 +7,6 @@ namespace EOffice.Users
     public interface IUserAppService : IApplicationService
     {
         ListResultOutput<UserDto> GetUsers();
+        UserDto GetCurrentUser();
     }
 }

@@ -1,7 +1,7 @@
 ﻿(function () {
     var controllerId = 'app.views.layout.header';
     angular.module('app').controller(controllerId, [
-        '$rootScope', '$state', function ($rootScope, $state) {
+        '$rootScope', '$state', 'abp.services.app.user', function ($rootScope, $state, userService) {
             var vm = this;
 
             vm.languages = abp.localization.languages;
@@ -12,6 +12,10 @@
 
             $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
                 vm.currentMenuName = toState.menu;
+            });
+
+            userService.getCurrentUser().success(function (data) {
+                vm.currentUser = data;
             });
         }
     ]);

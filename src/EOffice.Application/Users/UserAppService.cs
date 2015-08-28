@@ -23,5 +23,10 @@ namespace EOffice.Users
                        Items = _userManager.Users.ToList().MapTo<List<UserDto>>()
                    };
         }
+
+        public UserDto GetCurrentUser()
+        {
+            return _userManager.Users.First(t => t.Id == _userManager.AbpSession.UserId).MapTo<UserDto>();
+        }
     }
 }
