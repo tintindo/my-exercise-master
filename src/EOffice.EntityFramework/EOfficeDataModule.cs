@@ -18,7 +18,7 @@ namespace EOffice
         public override void Initialize()
         {
             IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
-            Database.SetInitializer<EOfficeDbContext>(null);
+            // Database.SetInitializer<EOfficeDbContext>(null);
         }
     }
 }

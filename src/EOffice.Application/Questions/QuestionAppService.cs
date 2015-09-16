@@ -110,7 +110,7 @@ namespace EOffice.Questions
         public SubmitAnswerOutput SubmitAnswer(SubmitAnswerInput input)
         {
             var question = _questionRepository.Get(input.QuestionId);
-            var currentUser = _userRepository.Get(CurrentSession.GetUserId());
+            var currentUser = _userRepository.Get(AbpSession.GetUserId());
 
             question.AnswerCount++;
 
