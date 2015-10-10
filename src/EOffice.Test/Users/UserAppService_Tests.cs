@@ -1,12 +1,12 @@
 ﻿using System.Linq;
-using Abp.TestBase.Runtime.Session;
+using Abp.Authorization;
 using EOffice.Users;
 using Shouldly;
 using Xunit;
 
-namespace EOffice.Test.Users
+namespace EOffice.IntegratedTest.Users
 {
-    public class UserAppService_Tests : SampleProjectTestBase
+    public class UserAppService_Tests : EOfficeIntegratedTestBase
     {
         private readonly IUserAppService _userAppService;
 
@@ -24,12 +24,18 @@ namespace EOffice.Test.Users
         }
 
         [Fact]
-        public void Should_Get_Current_Users()
+        public void Should_Get_Current_Users_With_Authorized_User()
         {
-            var abpSession = LocalIocManager.Resolve<TestAbpSession>();
-            abpSession.UserId = 2;
+            AbpSession.UserId = 2;
             var output = _userAppService.GetCurrentUser();
-            output.UserName.ShouldBe("admin"); 
+            output.UserName.ShouldBe("admin");
+        }
+
+        [Fact]
+        public void Should_Not_Get_Current_Users_Without_Authorized_User()
+        {
+            AbpSession.UserId = null; //not logged in
+            Should.Throw<AbpAuthorizationException>(() => { _userAppService.GetCurrentUser(); });
         }
     }
 }

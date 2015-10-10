@@ -2,14 +2,15 @@
 using System.Threading.Tasks;
 using Abp.Application.Services.Dto;
 using Abp.Authorization;
+using Abp.Runtime.Validation;
 using EOffice.Questions;
 using EOffice.Questions.Dto;
 using Shouldly;
 using Xunit;
 
-namespace EOffice.Test.Questions
+namespace EOffice.IntegratedTest.Questions
 {
-    public class QuestionAppService_Tests : SampleProjectTestBase
+    public class QuestionAppService_Tests : EOfficeIntegratedTestBase
     {
         private readonly IQuestionAppService _questionAppService;
 
@@ -21,7 +22,10 @@ namespace EOffice.Test.Questions
         [Fact]
         public void Should_Add_Question_With_Authorized_User()
         {
-            AbpSession.UserId = UsingDbContext(context => context.Users.Single(u => u.UserName == "admin" && u.TenantId == AbpSession.TenantId.Value).Id);
+            AbpSession.UserId =
+                UsingDbContext(
+                    context =>
+                        context.Users.Single(u => u.UserName == "admin" && u.TenantId == AbpSession.TenantId.Value).Id);
 
             const string questionTitle = "Test question title 1";
 
@@ -61,6 +65,12 @@ namespace EOffice.Test.Questions
                         Title = "A dummy title",
                         Text = "A dummy question text..."
                     }));
+        }
+
+        [Fact]
+        public void Should_Not_Get_Questions_With_Null_Input()
+        {
+            Should.Throw<AbpValidationException>(() => { _questionAppService.GetQuestions(null); });
         }
     }
 }

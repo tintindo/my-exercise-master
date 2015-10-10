@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{DFA48E27-7D53-4955-A722-3D91A7119BE7}"
 	ProjectSection(SolutionItems) = preProject
@@ -20,7 +20,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EOffice.Web", "EOffice.Web\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EOffice.WebApi", "EOffice.WebApi\EOffice.WebApi.csproj", "{5EB52D3D-09FD-463A-B02A-8D9856BD3724}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EOffice.Test", "EOffice.Test\EOffice.Test.csproj", "{DF9626D4-0055-4F2B-A72E-6930F5AF8FB9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EOffice.IntegratedTest", "EOffice.Test\EOffice.IntegratedTest.csproj", "{DF9626D4-0055-4F2B-A72E-6930F5AF8FB9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{60D9D54C-284E-4E36-9C9F-53675BDCAC42}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EOffice.UnitTest", "EOffice.UnitTest\EOffice.UnitTest.csproj", "{A15B8E06-463D-4C47-A236-0F04938081C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,8 +56,16 @@ Global
 		{DF9626D4-0055-4F2B-A72E-6930F5AF8FB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF9626D4-0055-4F2B-A72E-6930F5AF8FB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF9626D4-0055-4F2B-A72E-6930F5AF8FB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A15B8E06-463D-4C47-A236-0F04938081C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A15B8E06-463D-4C47-A236-0F04938081C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A15B8E06-463D-4C47-A236-0F04938081C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A15B8E06-463D-4C47-A236-0F04938081C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DF9626D4-0055-4F2B-A72E-6930F5AF8FB9} = {60D9D54C-284E-4E36-9C9F-53675BDCAC42}
+		{A15B8E06-463D-4C47-A236-0F04938081C3} = {60D9D54C-284E-4E36-9C9F-53675BDCAC42}
 	EndGlobalSection
 EndGlobal

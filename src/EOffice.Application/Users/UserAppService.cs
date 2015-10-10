@@ -2,6 +2,7 @@
 using System.Linq;
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
+using Abp.Authorization;
 using Abp.AutoMapper;
 using EOffice.Users.Dto;
 
@@ -24,6 +25,7 @@ namespace EOffice.Users
                    };
         }
 
+        [AbpAuthorize]
         public UserDto GetCurrentUser()
         {
             return _userManager.Users.First(t => t.Id == _userManager.AbpSession.UserId).MapTo<UserDto>();

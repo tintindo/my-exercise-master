@@ -1,29 +1,29 @@
 ﻿using System;
 using System.Data.Common;
-using System.Linq;
 using Abp.Collections;
 using Abp.Modules;
 using Abp.TestBase;
 using Castle.MicroKernel.Registration;
+using Effort;
 using EOffice.EntityFramework;
 using EOffice.Migrations.Data;
 
-namespace EOffice.Test
+namespace EOffice.IntegratedTest
 {
-    public abstract class SampleProjectTestBase : AbpIntegratedTestBase
+    public abstract class EOfficeIntegratedTestBase : AbpIntegratedTestBase
     {
-        protected SampleProjectTestBase()
+        protected EOfficeIntegratedTestBase()
         {
             //Fake DbConnection using Effort!
             LocalIocManager.IocContainer.Register(
                 Component.For<DbConnection>()
-                    .UsingFactoryMethod(Effort.DbConnectionFactory.CreateTransient)
+                    .UsingFactoryMethod(DbConnectionFactory.CreateTransient)
                     .LifestyleSingleton()
                 );
 
             //Creating initial data
             UsingDbContext(context => new InitialDataBuilder().Build(context));
-            
+
             AbpSession.TenantId = 1;
         }
 
