@@ -26,8 +26,8 @@ namespace EOffice.UnitTest.Questions
                 new Question {Title = "title2", CreationTime = DateTime.Now.AddDays(2), CreatorUser = new User()},
                 new Question {Title = "title3", CreationTime = DateTime.Now.AddDays(3), CreatorUser = new User()}
             };
-            var input = new GetQuestionsInput { MaxResultCount = 0, Sorting = "CreationTime DESC" };
-            
+            var input = new GetQuestionsInput {MaxResultCount = 0, Sorting = "CreationTime DESC"};
+
             var questionRepository = Substitute.For<IRepository<Question>>();
             var answerRepository = Substitute.For<IRepository<Answer>>();
             var userRepository = Substitute.For<IRepository<User, long>>();
@@ -39,7 +39,7 @@ namespace EOffice.UnitTest.Questions
             var questionAppService = new QuestionAppService(questionRepository, answerRepository, userRepository,
                 questionDomainService, unitOfWorkManager);
             var settingManager = Substitute.For<ISettingManager>();
-            settingManager.GetSettingValueAsync(Arg.Any<string>()).Returns(Task.Run(() => questions.Count.ToString()));
+            settingManager.GetSettingValueAsync(Arg.Any<string>()).Returns(Task.FromResult(questions.Count.ToString()));
             questionAppService.SettingManager = settingManager;
 
             // Act
@@ -108,7 +108,7 @@ namespace EOffice.UnitTest.Questions
             var questionAppService = new QuestionAppService(questionRepository, answerRepository, userRepository,
                 questionDomainService, unitOfWorkManager);
             var settingManager = Substitute.For<ISettingManager>();
-            settingManager.GetSettingValueAsync(Arg.Any<string>()).Returns(Task.Run(() => "2"));
+            settingManager.GetSettingValueAsync(Arg.Any<string>()).Returns(Task.FromResult("2"));
             questionAppService.SettingManager = settingManager;
 
             // Act
@@ -120,6 +120,66 @@ namespace EOffice.UnitTest.Questions
             output.Items.ShouldContain(t => t.Title.StartsWith("title"));
             output.Items[0].Title.ShouldBe("title3");
             settingManager.ReceivedWithAnyArgs().GetSettingValueAsync("aa");
+        }
+
+        [Fact]
+        public void Should_Create_Question()
+        {
+            // Arrange
+            var input = new CreateQuestionInput();
+            var question = new Question
+            {
+                Title = "title1",
+                CreationTime = DateTime.Now.AddDays(1),
+                CreatorUser = new User()
+            };
+            var questionRepository = Substitute.For<IRepository<Question>>();
+            questionRepository.InsertAsync(Arg.Any<Question>()).Returns(Task.FromResult(question));
+
+            var answerRepository = Substitute.For<IRepository<Answer>>();
+            var userRepository = Substitute.For<IRepository<User, long>>();
+            var questionDomainService = new QuestionDomainService(answerRepository);
+            var unitOfWorkManager = Substitute.For<IUnitOfWorkManager>();
+
+            var questionAppService = new QuestionAppService(questionRepository, answerRepository, userRepository,
+                questionDomainService, unitOfWorkManager);
+
+            // Act
+            var output = questionAppService.CreateQuestion(input);
+
+            // Assert
+            questionRepository.Received().InsertAsync(Arg.Any<Question>());
+        }
+
+        [Fact]
+        public async Task Should_Throw_Exception_When_Create_Question_Fail()
+        {
+            // Arrange
+            var input = new CreateQuestionInput();
+            var question = new Question
+            {
+                Title = "title1",
+                CreationTime = DateTime.Now.AddDays(1),
+                CreatorUser = new User()
+            };
+            var questionRepository = Substitute.For<IRepository<Question>>();
+            questionRepository
+                .When(x => x.InsertAsync(Arg.Any<Question>()))
+                .Do(x => { throw new Exception(); });
+            //.InsertAsync(Arg.Any<Question>())
+            //.Returns(question)
+            //.AndDoes(x => { throw new Exception(); });
+
+            var answerRepository = Substitute.For<IRepository<Answer>>();
+            var userRepository = Substitute.For<IRepository<User, long>>();
+            var questionDomainService = new QuestionDomainService(answerRepository);
+            var unitOfWorkManager = Substitute.For<IUnitOfWorkManager>();
+
+            var questionAppService = new QuestionAppService(questionRepository, answerRepository, userRepository,
+                questionDomainService, unitOfWorkManager);
+
+            // Assert
+            await Assert.ThrowsAsync<Exception>(() => questionAppService.CreateQuestion(input));
         }
     }
 }
